@@ -15,8 +15,8 @@ public class GstNetworkMultipleTexture : GstBaseTexture {
 	}
 
 	public string TargetIP="127.0.0.1";
-	public string EncoderType="H264";
-	public int TargetPort=7000;
+	public string EncoderType="JPEG";
+	public int TargetPort=5000;
 	public int StreamsCount=1;
 
 	public ulong[] Timestamp;

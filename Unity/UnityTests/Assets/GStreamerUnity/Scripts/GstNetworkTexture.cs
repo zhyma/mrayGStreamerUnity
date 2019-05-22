@@ -5,7 +5,7 @@ public class GstNetworkTexture : GstBaseTexture {
 
 
 	public string TargetIP="127.0.0.1";
-	public int TargetPort=7000;
+	public int TargetPort=5000;
 
 	private GstNetworkPlayer _player;
 
