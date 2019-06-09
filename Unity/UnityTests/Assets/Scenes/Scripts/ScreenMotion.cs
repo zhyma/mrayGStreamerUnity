@@ -19,7 +19,7 @@ public class ScreenMotion : MonoBehaviour
         //transform.LookAt(targetCamera.position);
         transform.position = targetCamera.position + targetCamera.forward * 2;
         transform.rotation = Quaternion.LookRotation(targetCamera.position-transform.position)*Quaternion.Euler(0, 180, 0);
-        Debug.Log(targetCamera.forward);
+        //Debug.Log(targetCamera.forward);
         //Debug.Log(targetCamera.position);
     }
 }
