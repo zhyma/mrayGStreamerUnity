@@ -166,7 +166,7 @@ public class udp_server : MonoBehaviour
 
             long currTicks = System.DateTime.Now.Ticks;
             long currMills = (currTicks - dtFrom.Ticks) / 10000;
-            sendStr = currTicks.ToString() + Vec2Str(pos) + Vec2Str(angles);
+            sendStr = currTicks.ToString() + "," + Vec2Str(pos) + Vec2Str(angles);
             Debug.Log(sendStr);
             //sendStr = "test";
             SocketSend(sendStr);
