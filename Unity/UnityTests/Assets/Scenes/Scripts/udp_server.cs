@@ -42,10 +42,6 @@ public class udp_server : MonoBehaviour
         //thread for hearing from client
         receiveThread = new Thread(new ThreadStart(SocketReceive));
         receiveThread.Start();
-
-        //send 6DOFs head information to the client
-        sendThread = new Thread(new ThreadStart(DataSend));
-        sendThread.Start();
     }
 
     string Vec2Str(Vector3 input)
@@ -54,18 +50,6 @@ public class udp_server : MonoBehaviour
         output += input.y.ToString() + ',';
         output += input.z.ToString() + ',';
         return output;
-    }
-
-    void DataSend()
-    {
-        Vector3 pos;
-        Quaternion rotQ;
-        Vector3 angles;
-        
-        while (true)
-        {
-            
-        }
     }
 
     void SocketSend(string sendStr)
@@ -160,17 +144,27 @@ public class udp_server : MonoBehaviour
         //after connected, send data till lost of connection
         else
         {
-            Vector3 pos = targetCamera.position;
-            Quaternion rotQ = targetCamera.rotation;
-            Vector3 angles = rotQ.eulerAngles;
+            if (Time.frameCount % 3 == 0)
+            {
+                Vector3 pos = targetCamera.position;
+                Quaternion rotQ = targetCamera.rotation;
+                Vector3 angles = rotQ.eulerAngles;
 
-            long currTicks = System.DateTime.Now.Ticks;
-            long currMills = (currTicks - dtFrom.Ticks) / 10000;
-            sendStr = currTicks.ToString() + "," + Vec2Str(pos) + Vec2Str(angles);
-            Debug.Log(sendStr);
-            //sendStr = "test";
-            SocketSend(sendStr);
-            //Thread.Sleep(10);
+                long currTicks = System.DateTime.Now.Ticks;
+                long currMills = (currTicks - dtFrom.Ticks) / 10000;
+                sendStr = currTicks.ToString() + "," + Vec2Str(pos) + Vec2Str(angles);
+                if (OVRInput.Get(OVRInput.Button.One))
+                {
+                    sendStr += "T";
+                    Debug.Log("Button one is down");
+                }
+                else
+                {
+                    sendStr += "F";
+                }
+                //Debug.Log(sendStr);
+                SocketSend(sendStr);
+            }
         }
     }
 
