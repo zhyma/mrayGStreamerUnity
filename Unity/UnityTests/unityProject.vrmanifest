@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.unitytests.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "D:\\arm\\mrayGStreamerUnity\\Unity\\UnityTests\\actions.json",
+      "action_manifest_path": "C:\\Users\\GreyCat\\Documents\\project\\arm\\mrayGStreamerUnity\\Unity\\UnityTests\\actions.json",
       "strings": {
         "en_us": {
           "name": "UnityTests [Testing]"
