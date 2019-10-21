@@ -7,6 +7,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
+using Valve.VR;
+
 public class udp_server : MonoBehaviour
 {
     Socket socket;
@@ -166,7 +168,17 @@ public class udp_server : MonoBehaviour
 
             long currTicks = System.DateTime.Now.Ticks;
             long currMills = (currTicks - dtFrom.Ticks) / 10000;
-            sendStr = currTicks.ToString() + "," + Vec2Str(pos) + Vec2Str(angles);
+            //  Data format: time stamp + 3 positions + 3 rotations
+            sendStr = currMills.ToString() + "," + Vec2Str(pos) + Vec2Str(angles);
+            //if (OVRInput.Get(OVRInput.Button.One))
+            //{
+            //    sendStr += "T";
+            //    Debug.Log("Button one is down");
+            //}
+            //else
+            //{
+            //    sendStr += "F";
+            //}
             Debug.Log(sendStr);
             //sendStr = "test";
             SocketSend(sendStr);
