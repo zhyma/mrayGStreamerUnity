@@ -26,8 +26,9 @@ public class udp_server : MonoBehaviour
 
     //link to OVRCameraRig
     public Transform targetCamera;
+    public Transform leftController;
+    public Transform rightController;
     System.DateTime dtFrom = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-
 
     void InitSocket()
     {
@@ -46,8 +47,8 @@ public class udp_server : MonoBehaviour
         receiveThread.Start();
 
         //send 6DOFs head information to the client
-        sendThread = new Thread(new ThreadStart(DataSend));
-        sendThread.Start();
+        //sendThread = new Thread(new ThreadStart(DataSend));
+        //sendThread.Start();
     }
 
     string Vec2Str(Vector3 input)
@@ -56,18 +57,6 @@ public class udp_server : MonoBehaviour
         output += input.y.ToString() + ',';
         output += input.z.ToString() + ',';
         return output;
-    }
-
-    void DataSend()
-    {
-        Vector3 pos;
-        Quaternion rotQ;
-        Vector3 angles;
-
-        while (true)
-        {
-
-        }
     }
 
     void SocketSend(string sendStr)
@@ -86,7 +75,6 @@ public class udp_server : MonoBehaviour
             Debug.Log("remote closed.");
             connected = false;
         }
-
     }
 
     //receive from a client
@@ -162,23 +150,16 @@ public class udp_server : MonoBehaviour
         //after connected, send data till lost of connection
         else
         {
-            Vector3 pos = targetCamera.position;
+            Vector3 camPos = targetCamera.position;
             Quaternion rotQ = targetCamera.rotation;
-            Vector3 angles = rotQ.eulerAngles;
+            Vector3 camAngles = rotQ.eulerAngles;
 
             long currTicks = System.DateTime.Now.Ticks;
             long currMills = (currTicks - dtFrom.Ticks) / 10000;
             //  Data format: time stamp + 3 positions + 3 rotations
-            sendStr = currMills.ToString() + "," + Vec2Str(pos) + Vec2Str(angles);
-            //if (OVRInput.Get(OVRInput.Button.One))
-            //{
-            //    sendStr += "T";
-            //    Debug.Log("Button one is down");
-            //}
-            //else
-            //{
-            //    sendStr += "F";
-            //}
+
+            sendStr = currMills.ToString() + "," + Vec2Str(camPos) + Vec2Str(camAngles);
+
             Debug.Log(sendStr);
             //sendStr = "test";
             SocketSend(sendStr);

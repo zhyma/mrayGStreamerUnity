@@ -1,0 +1,3 @@
+gstreamer directory: /c/gstreamer/1.0/x86_64/bin
+
+gstreamer command: gst-launch-1.0 ksvideosrc ! video/x-raw, framerate=30/1, width=960, height=544 ! timeoverlay ! tee name="local" ! queue ! videoconvert! autovideosink local. ! queue ! jpegenc ! rtpjpegpay ! udpsink host=130.215.206.253 port=5000
