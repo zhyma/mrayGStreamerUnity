@@ -151,15 +151,28 @@ public class udp_server : MonoBehaviour
         else
         {
             Vector3 camPos = targetCamera.position;
-            Quaternion rotQ = targetCamera.rotation;
-            Vector3 camAngles = rotQ.eulerAngles;
+            Quaternion rotC = targetCamera.rotation;
+            Vector3 camAngles = rotC.eulerAngles;
+
+            Vector3 rightCtrlPos = rightController.position;
+            Quaternion rotR = rightController.rotation;
+            Vector3 rightAngles = rotR.eulerAngles;
+
+            Vector3 leftCtrlPos = leftController.position;
+            Quaternion rotL = leftController.rotation;
+            Vector3 leftAngles = rotL.eulerAngles;
 
             long currTicks = System.DateTime.Now.Ticks;
             long currMills = (currTicks - dtFrom.Ticks) / 10000;
             //  Data format: time stamp + 3 positions + 3 rotations
 
             sendStr = currMills.ToString() + "," + Vec2Str(camPos) + Vec2Str(camAngles);
+            sendStr += "right, ";
+            sendStr += Vec2Str(rightCtrlPos) + Vec2Str(rightAngles);
+            sendStr += "left, ";
+            sendStr += Vec2Str(leftCtrlPos) + Vec2Str(leftAngles);
 
+            Debug.Log(rightAngles);
             Debug.Log(sendStr);
             //sendStr = "test";
             SocketSend(sendStr);
