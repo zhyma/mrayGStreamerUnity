@@ -22,6 +22,8 @@ public class ctrl_test : MonoBehaviour
         Debug.Log("Right Trigger value:" + SteamVR_Actions._default.Squeeze.GetAxis(RightInputSource).ToString());
         Debug.Log("Left Trackpad value:" + SteamVR_Actions._default.Scroll.GetAxis(LeftInputSource).ToString());
         Debug.Log("Right Trackpad value:" + SteamVR_Actions._default.Scroll.GetAxis(RightInputSource).ToString());
+        Debug.Log("Left Trackpad Button value:" + SteamVR_Actions._default.Teleport.GetState(LeftInputSource).ToString());
+        Debug.Log("Right Trackpad Button value:" + SteamVR_Actions._default.Teleport.GetState(RightInputSource).ToString());
     }
 }
 
