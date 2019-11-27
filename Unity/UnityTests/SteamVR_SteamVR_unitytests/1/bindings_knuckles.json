@@ -1,5 +1,5 @@
 {
-  "app_key": "application.generated.unity.steamvr.exe",
+  
   "bindings": {
     "/actions/buggy": {
       "chords": [],
@@ -42,40 +42,32 @@
           }
         },
         {
-          "path": "/user/hand/left/input/joystick",
+          "path": "/user/hand/left/input/grip",
+          "mode": "force_sensor",
+          "parameters": {},
+          "inputs": {
+            "force": {
+              "output": "/actions/default/in/squeeze"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/grip",
+          "mode": "force_sensor",
+          "parameters": {},
+          "inputs": {
+            "force": {
+              "output": "/actions/default/in/squeeze"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/trackpad",
           "mode": "button",
           "parameters": {},
           "inputs": {
             "click": {
               "output": "/actions/default/in/teleport"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/grip",
-          "mode": "button",
-          "parameters": {
-            "click_activate_threshold": "0.8",
-            "click_deactivate_threshold": "0.7",
-            "force_input": "force"
-          },
-          "inputs": {
-            "click": {
-              "output": "/actions/default/in/grabgrip"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/trigger",
-          "mode": "button",
-          "parameters": {
-            "click_activate_threshold": "0.8",
-            "click_deactivate_threshold": "0.7",
-            "force_input": "value"
-          },
-          "inputs": {
-            "click": {
-              "output": "/actions/default/in/grabpinch"
             }
           }
         },
@@ -90,20 +82,7 @@
           }
         },
         {
-          "path": "/user/hand/right/input/trigger",
-          "mode": "button",
-          "parameters": {
-            "click_activate_threshold": "0.8",
-            "click_deactivate_threshold": "0.7"
-          },
-          "inputs": {
-            "click": {
-              "output": "/actions/default/in/grabpinch"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
+          "path": "/user/hand/right/input/trackpad",
           "mode": "button",
           "parameters": {},
           "inputs": {
@@ -113,36 +92,54 @@
           }
         },
         {
-          "path": "/user/hand/right/input/grip",
-          "mode": "button",
+          "path": "/user/hand/left/input/grip",
+          "mode": "grab",
           "parameters": {
-            "click_activate_threshold": "0.8",
-            "click_deactivate_threshold": "0.7",
-            "force_input": "force"
+            "force_hold_threshold": "0.02",
+            "force_release_threshold": "0.01"
           },
           "inputs": {
-            "click": {
+            "grab": {
               "output": "/actions/default/in/grabgrip"
             }
           }
         },
         {
-          "path": "/user/hand/left/input/grip",
-          "mode": "trigger",
-          "parameters": {},
+          "path": "/user/hand/right/input/grip",
+          "mode": "grab",
+          "parameters": {
+            "force_hold_threshold": "0.02",
+            "force_release_threshold": "0.01"
+          },
           "inputs": {
-            "pull": {
-              "output": "/actions/default/in/squeeze"
+            "grab": {
+              "output": "/actions/default/in/grabgrip"
             }
           }
         },
         {
-          "path": "/user/hand/right/input/grip",
-          "mode": "trigger",
-          "parameters": {},
+          "path": "/user/hand/left/input/pinch",
+          "mode": "grab",
+          "parameters": {
+            "force_hold_threshold": "0.02",
+            "force_release_threshold": "0.01"
+          },
           "inputs": {
-            "pull": {
-              "output": "/actions/default/in/squeeze"
+            "grab": {
+              "output": "/actions/default/in/grabpinch"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/pinch",
+          "mode": "grab",
+          "parameters": {
+            "force_hold_threshold": "0.02",
+            "force_release_threshold": "0.01"
+          },
+          "inputs": {
+            "grab": {
+              "output": "/actions/default/in/grabpinch"
             }
           }
         }
@@ -166,7 +163,7 @@
       "skeleton": []
     }
   },
-  "controller_type": "oculus_touch",
+  "controller_type": "knuckles",
   "description": "",
-  "name": "oculus_touch"
+  "name": "knuckles_default"
 }
