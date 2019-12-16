@@ -28,10 +28,13 @@ public class udp_server : MonoBehaviour
     public Transform targetCamera;
     public Transform leftController;
     public Transform rightController;
-    System.DateTime dtFrom = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+    System.DateTime dtFrom = System.DateTime.Now;
+    //System.DateTime dtFrom = System.DateTime.Now.Ticks;
+    long lastSent;
 
     void InitSocket()
     {
+        lastSent = 0;
         //Listen to any IP, serve as a server
         ipEnd = new IPEndPoint(IPAddress.Any, 8001);
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -150,33 +153,39 @@ public class udp_server : MonoBehaviour
         //after connected, send data till lost of connection
         else
         {
-            Vector3 camPos = targetCamera.position;
-            Quaternion rotC = targetCamera.rotation;
-            Vector3 camAngles = rotC.eulerAngles;
-
-            Vector3 rightCtrlPos = rightController.position;
-            Quaternion rotR = rightController.rotation;
-            Vector3 rightAngles = rotR.eulerAngles;
-
-            Vector3 leftCtrlPos = leftController.position;
-            Quaternion rotL = leftController.rotation;
-            Vector3 leftAngles = rotL.eulerAngles;
-
+            //reduce data rate, only send at around 20Hz
             long currTicks = System.DateTime.Now.Ticks;
-            long currMills = (currTicks - dtFrom.Ticks) / 10000;
-            //  Data format: time stamp + 3 positions + 3 rotations
 
-            sendStr = currMills.ToString() + "," + Vec2Str(camPos) + Vec2Str(camAngles);
-            sendStr += "right, ";
-            sendStr += Vec2Str(rightCtrlPos) + Vec2Str(rightAngles);
-            sendStr += "left, ";
-            sendStr += Vec2Str(leftCtrlPos) + Vec2Str(leftAngles);
+            if (currTicks - lastSent > 90 * 10000)
+            {
+                Vector3 camPos = targetCamera.position;
+                Quaternion rotC = targetCamera.rotation;
+                Vector3 camAngles = rotC.eulerAngles;
 
-            Debug.Log(rightAngles);
-            Debug.Log(sendStr);
-            //sendStr = "test";
-            SocketSend(sendStr);
-            //Thread.Sleep(10);
+                Vector3 rightCtrlPos = rightController.position;
+                Quaternion rotR = rightController.rotation;
+                Vector3 rightAngles = rotR.eulerAngles;
+
+                Vector3 leftCtrlPos = leftController.position;
+                Quaternion rotL = leftController.rotation;
+                Vector3 leftAngles = rotL.eulerAngles;
+
+                long currMills = (currTicks - dtFrom.Ticks) / 10000;
+                //  Data format: time stamp + 3 positions + 3 rotations
+
+                sendStr = currMills.ToString() + "," + Vec2Str(camPos) + Vec2Str(camAngles);
+                sendStr += "right, ";
+                sendStr += Vec2Str(rightCtrlPos) + Vec2Str(rightAngles);
+                sendStr += "left, ";
+                sendStr += Vec2Str(leftCtrlPos) + Vec2Str(leftAngles);
+
+                Debug.Log(rightAngles);
+                Debug.Log(sendStr);
+                //sendStr = "test";
+                SocketSend(sendStr);
+                lastSent = currTicks;
+                //Thread.Sleep(10);
+            }
         }
     }
 
