@@ -73,17 +73,13 @@ if __name__ == '__main__':
             for i in [0,1,2]:
                 if data[i*6:i*6+3]==[0.0, 0.0, 0.0]:
                     continue
-                [x, z, y] = data[i*6:i*6+3]
-                print [x, y, z]
+                [x, y, z, roll, pitch, yaw] = data[i*6:i*6+6]
 
                 point.set_xdata([x])
                 point.set_ydata([y])
                 # there is no .set_zdata() for 3D data...
                 point.set_3d_properties([z])
 
-                pitch = -data[i*6+5]
-                yaw = data[i*6+3]
-                roll =  -data[i*6+4]+pi/2
                 axis = new_axis([roll, pitch, yaw])
                 if i > 0:
                     axis = [l/2 for l in axis]

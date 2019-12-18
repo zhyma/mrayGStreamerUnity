@@ -54,11 +54,17 @@ public class udp_server : MonoBehaviour
         //sendThread.Start();
     }
 
-    string Vec2Str(Vector3 input)
+    //1. Convert the vectors from the Unity coordinate to the ROS coordinate
+    //2. convert the "corrected vectors" to string, prepare for the UDP package.
+    //giving x, y, z, roll, pitch, yaw
+    string Vec2Str(Vector3 pos, Vector3 rot)
     {
-        string output = input.x.ToString() + ',';
-        output += input.y.ToString() + ',';
-        output += input.z.ToString() + ',';
+        string output = pos.x.ToString("0.00") + ',';
+        output += pos.z.ToString("0.00") + ',';
+        output += pos.y.ToString("0.00") + ',';
+        output += (-rot.y + 90).ToString("0.00") + ','; // roll
+        output += (-rot.z).ToString("0.00") + ',';
+        output += (rot.x).ToString("0.00") + ',';
         return output;
     }
 
@@ -173,11 +179,11 @@ public class udp_server : MonoBehaviour
                 long currMills = (currTicks - dtFrom.Ticks) / 10000;
                 //  Data format: time stamp + 3 positions + 3 rotations
 
-                sendStr = currMills.ToString() + "," + Vec2Str(camPos) + Vec2Str(camAngles);
+                sendStr = currMills.ToString() + "," + Vec2Str(camPos, camAngles);
                 sendStr += "right, ";
-                sendStr += Vec2Str(rightCtrlPos) + Vec2Str(rightAngles);
+                sendStr += Vec2Str(rightCtrlPos, rightAngles);
                 sendStr += "left, ";
-                sendStr += Vec2Str(leftCtrlPos) + Vec2Str(leftAngles);
+                sendStr += Vec2Str(leftCtrlPos, leftAngles);
 
                 Debug.Log(rightAngles);
                 Debug.Log(sendStr);
