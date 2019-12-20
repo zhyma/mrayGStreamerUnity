@@ -190,7 +190,7 @@ public class udp_server : MonoBehaviour
                 //sendStr = "test";
                 SocketSend(sendStr);
                 lastSent = currTicks;
-                //Thread.Sleep(10);
+                Thread.Sleep(5);
             }
         }
     }
