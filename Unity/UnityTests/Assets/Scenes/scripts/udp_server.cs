@@ -62,9 +62,10 @@ public class udp_server : MonoBehaviour
         string output = pos.x.ToString("0.00") + ',';
         output += pos.z.ToString("0.00") + ',';
         output += pos.y.ToString("0.00") + ',';
-        output += (-rot.y + 90).ToString("0.00") + ','; // roll
+        
         output += (-rot.z).ToString("0.00") + ',';
         output += (rot.x).ToString("0.00") + ',';
+        output += (-rot.y + 90).ToString("0.00") + ',';
         return output;
     }
 
