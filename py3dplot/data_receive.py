@@ -56,8 +56,8 @@ if __name__ == '__main__':
     
 
     while True:
-        print 'recording data'
-        while True:
+        try:
+            sock.settimeout(1)
             buffer, addr = sock.recvfrom(2048)
             buffer = buffer.split(',')
 
@@ -92,4 +92,8 @@ if __name__ == '__main__':
 
             fig.canvas.draw()
             fig.canvas.flush_events()
+        except:
+            print "no server detected, reconnecting"
+            time.sleep(0.5)
+            sock.sendto('request', address)
 

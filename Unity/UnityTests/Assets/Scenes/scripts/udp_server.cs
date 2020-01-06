@@ -22,7 +22,6 @@ public class udp_server : MonoBehaviour
     byte[] sendData = new byte[1024];
     int recvLen;
     Thread receiveThread;
-    Thread sendThread;
 
     //link to OVRCameraRig
     public Transform targetCamera;
@@ -97,16 +96,18 @@ public class udp_server : MonoBehaviour
             //receive data and get client information
             try
             {
+                Debug.Log("Try to receive");
                 recvLen = socket.ReceiveFrom(recvData, ref clientEnd);
+                Debug.Log("Message from: " + clientEnd.ToString());
+                recvStr = Encoding.ASCII.GetString(recvData, 0, recvLen);
+                Debug.Log(recvStr);
+                connected = true;
             }
             catch
             {
-                Debug.Log("remote closed");
-                break;
+                Debug.Log("Remote closed. Receive failed");
+                connected = false;
             }
-            Debug.Log("message from: " + clientEnd.ToString());
-            recvStr = Encoding.ASCII.GetString(recvData, 0, recvLen);
-            Debug.Log(recvStr);
         }
     }
 
@@ -116,11 +117,6 @@ public class udp_server : MonoBehaviour
         {
             receiveThread.Interrupt();
             receiveThread.Abort();
-        }
-        if (sendThread != null)
-        {
-            sendThread.Interrupt();
-            sendThread.Abort();
         }
         if (socket != null)
             socket.Close();
@@ -139,23 +135,7 @@ public class udp_server : MonoBehaviour
         //waiting for a client to connect
         if (!connected)
         {
-            lock (clientEnd)
-            {
-                string epString = clientEnd.ToString();
-                string[] endPoint = epString.Split(':');
-                IPAddress ip;
-                IPAddress.TryParse(endPoint[0], out ip);
-                int port;
-                int.TryParse(endPoint[1], out port);
-                if (port != 0)
-                {
-                    Debug.Log(endPoint[0]);
-                    Debug.Log(endPoint[1]);
-                    //copy client information
-                    send2End = new IPEndPoint(ip, port);
-                    connected = true;
-                }
-            }
+            Thread.Sleep(500);
         }
         //after connected, send data till lost of connection
         else
