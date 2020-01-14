@@ -1,19 +1,19 @@
 {
   "actions": [
     {
-      "name": "/actions/default/in/InteractUI",
+      "name": "/actions/default/in/Menu",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Teleport",
+      "name": "/actions/default/in/TrackpadBtn",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/GrabPinch",
+      "name": "/actions/default/in/TriggerBtn",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/GrabGrip",
+      "name": "/actions/default/in/Grip",
       "type": "boolean"
     },
     {
@@ -31,7 +31,7 @@
       "skeleton": "/skeleton/hand/right"
     },
     {
-      "name": "/actions/default/in/Squeeze",
+      "name": "/actions/default/in/TriggerAxis",
       "type": "vector1",
       "requirement": "optional"
     },
@@ -41,8 +41,12 @@
       "requirement": "optional"
     },
     {
-      "name": "/actions/default/in/Scroll",
+      "name": "/actions/default/in/TrackpadAxis",
       "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/System",
+      "type": "boolean"
     },
     {
       "name": "/actions/default/out/Haptic",
@@ -96,15 +100,18 @@
   "localization": [
     {
       "language_tag": "en_US",
-      "/actions/default/in/GrabGrip": "Grab Grip",
-      "/actions/default/in/GrabPinch": "Grab Pinch",
       "/actions/default/in/HeadsetOnHead": "Headset on head (proximity sensor)",
-      "/actions/default/in/InteractUI": "Interact With UI",
       "/actions/default/in/Pose": "Pose",
       "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
       "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/default/in/Teleport": "Teleport",
-      "/actions/default/out/Haptic": "Haptic"
+      "/actions/default/out/Haptic": "Haptic",
+      "/actions/default/in/Menu": "Menu",
+      "/actions/default/in/Grip": "Grip",
+      "/actions/default/in/TriggerBtn": "TriggerBtn",
+      "/actions/default/in/TriggerAxis": "TriggerAxis",
+      "/actions/default/in/TrackpadAxis": "TrackpadAxis",
+      "/actions/default/in/TrackpadBtn": "TrackpadBtn",
+      "/actions/default/in/System": "System"
     }
   ]
 }

@@ -31,6 +31,9 @@ public class udp_server : MonoBehaviour
     //System.DateTime dtFrom = System.DateTime.Now.Ticks;
     long lastSent;
 
+    public SteamVR_Input_Sources LeftInputSource = SteamVR_Input_Sources.LeftHand;
+    public SteamVR_Input_Sources RightInputSource = SteamVR_Input_Sources.RightHand;
+
     void InitSocket()
     {
         lastSent = 0;
@@ -129,6 +132,14 @@ public class udp_server : MonoBehaviour
         InitSocket();
     }
 
+    void BtnState(bool state)
+    {
+        if (state)
+            sendStr += "1, ";
+        else
+            sendStr += "0, ";
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -165,10 +176,26 @@ public class udp_server : MonoBehaviour
                 sendStr += Vec2Str(rightCtrlPos, rightAngles);
                 sendStr += "left, ";
                 sendStr += Vec2Str(leftCtrlPos, leftAngles);
+                sendStr += "r_ctrl, ";// + SteamVR_Actions._default.Scroll.GetAxis(RightInputSource).ToString() + SteamVR_Actions._default.Squeeze.GetAxis(RightInputSource).ToString();
+                sendStr += SteamVR_Actions._default.TrackpadAxis.GetAxis(RightInputSource)[0].ToString("0.00") + ", ";
+                sendStr += SteamVR_Actions._default.TrackpadAxis.GetAxis(RightInputSource)[1].ToString("0.00") + ", ";
+                sendStr += SteamVR_Actions._default.TriggerAxis.GetAxis(RightInputSource).ToString("0.00") + ", ";
+                BtnState(SteamVR_Actions._default.Menu.GetState(RightInputSource));
+                BtnState(SteamVR_Actions._default.TriggerBtn.GetState(RightInputSource));
+                BtnState(SteamVR_Actions._default.TrackpadBtn.GetState(RightInputSource));
+                BtnState(SteamVR_Actions._default.Grip.GetState(RightInputSource));
+                //BtnState(SteamVR_Actions._default.System.GetState(RightInputSource));
 
-                Debug.Log(rightAngles);
+                sendStr += "l_ctrl, ";
+                sendStr += SteamVR_Actions._default.TrackpadAxis.GetAxis(LeftInputSource)[0].ToString("0.00") + ", ";
+                sendStr += SteamVR_Actions._default.TrackpadAxis.GetAxis(LeftInputSource)[1].ToString("0.00") + ", ";
+                sendStr += SteamVR_Actions._default.TriggerAxis.GetAxis(LeftInputSource).ToString("0.00") + ", ";
+                BtnState(SteamVR_Actions._default.Menu.GetState(LeftInputSource));
+                BtnState(SteamVR_Actions._default.TriggerBtn.GetState(LeftInputSource));
+                BtnState(SteamVR_Actions._default.TrackpadBtn.GetState(LeftInputSource));
+                BtnState(SteamVR_Actions._default.Grip.GetState(LeftInputSource));
+
                 Debug.Log(sendStr);
-                //sendStr = "test";
                 SocketSend(sendStr);
                 lastSent = currTicks;
                 Thread.Sleep(5);
