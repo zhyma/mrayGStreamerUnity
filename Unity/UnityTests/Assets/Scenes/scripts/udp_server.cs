@@ -38,7 +38,7 @@ public class udp_server : MonoBehaviour
     {
         lastSent = 0;
         //Listen to any IP, serve as a server
-        ipEnd = new IPEndPoint(IPAddress.Any, 8001);
+        ipEnd = new IPEndPoint(IPAddress.Any, 23023);
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         socket.Bind(ipEnd);
 
@@ -151,10 +151,10 @@ public class udp_server : MonoBehaviour
         //after connected, send data till lost of connection
         else
         {
-            //reduce data rate, only send at around 20Hz
+            //reduce data rate, only send at around 10Hz
             long currTicks = System.DateTime.Now.Ticks;
 
-            if (currTicks - lastSent > 90 * 10000)
+            if (currTicks - lastSent > 180 * 10000)
             {
                 Vector3 camPos = targetCamera.position;
                 Quaternion rotC = targetCamera.rotation;
@@ -198,7 +198,7 @@ public class udp_server : MonoBehaviour
                 Debug.Log(sendStr);
                 SocketSend(sendStr);
                 lastSent = currTicks;
-                Thread.Sleep(5);
+                Thread.Sleep(50);
             }
         }
     }
