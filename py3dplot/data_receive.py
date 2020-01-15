@@ -49,7 +49,7 @@ if __name__ == '__main__':
         lines.append(ax.plot([o[0], o[0] + axis[2][0]], [o[1], o[1] + axis[2][1]], [o[2], o[2] + axis[2][2]], color='b')[0])
 
 
-    address = ("127.0.0.1", 8001)
+    address = ("127.0.0.1", 23023)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto('request', address)
     # 3 position and 3 rotation
