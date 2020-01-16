@@ -2,12 +2,12 @@ import numpy as np
 from math import sin, cos
 
 def rotation(roll, pitch, yaw):
-    #x->pitch
-    #y->yaw
-    #z->roll
-    rx = np.array([[1, 0, 0], [0, cos(pitch), -sin(pitch)], [0, sin(pitch), cos(pitch)]])
-    ry = np.array([[cos(yaw), 0, sin(yaw)], [0, 1, 0], [-sin(yaw), 0, cos(yaw)]])
-    rz = np.array([[cos(roll), -sin(roll), 0], [sin(roll), cos(roll), 0], [0, 0, 1]])
+    #x->roll
+    #y->pitch
+    #z->yaw
+    rx = np.array([[1, 0, 0], [0, cos(roll), -sin(roll)], [0, sin(roll), cos(roll)]])
+    ry = np.array([[cos(pitch), 0, sin(pitch)], [0, 1, 0], [-sin(pitch), 0, cos(pitch)]])
+    rz = np.array([[cos(yaw), -sin(yaw), 0], [sin(yaw), cos(yaw), 0], [0, 0, 1]])
     rotation = np.dot(rz, ry)
     rotation = np.dot(rotation, rx)
     return rotation
