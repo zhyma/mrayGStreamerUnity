@@ -8,3 +8,9 @@ Initializing GStreamer - Done
 Info: Checking is active
 mray_gstreamer_initialize
 Info: Checking is active
+mray_gstreamer_initialize
+Info: Checking is active
+mray_gstreamer_initialize
+Info: Checking is active
+mray_gstreamer_initialize
+Info: Checking is active

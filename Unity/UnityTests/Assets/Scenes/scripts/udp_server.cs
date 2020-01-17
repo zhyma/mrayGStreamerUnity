@@ -61,13 +61,13 @@ public class udp_server : MonoBehaviour
     //giving x, y, z, roll, pitch, yaw
     string Vec2Str(Vector3 pos, Vector3 rot)
     {
-        string output = pos.z.ToString("0.00") + ',';
-        output += (-pos.x).ToString("0.00") + ',';
+        string output = (-pos.z).ToString("0.00") + ',';
+        output += pos.x.ToString("0.00") + ',';
         output += pos.y.ToString("0.00") + ',';
         
         output += (-rot.z).ToString("0.00") + ','; 
         output += (rot.x).ToString("0.00") + ',';
-        output += (-rot.y).ToString("0.00") + ',';
+        output += (-rot.y+180).ToString("0.00") + ',';
         return output;
     }
 
