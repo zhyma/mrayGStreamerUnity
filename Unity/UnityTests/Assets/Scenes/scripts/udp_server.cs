@@ -146,7 +146,7 @@ public class udp_server : MonoBehaviour
         //waiting for a client to connect
         if (!connected)
         {
-            Thread.Sleep(500);
+            Thread.Sleep(20);
         }
         //after connected, send data till lost of connection
         else
