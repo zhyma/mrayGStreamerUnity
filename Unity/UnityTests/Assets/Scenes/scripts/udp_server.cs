@@ -59,15 +59,16 @@ public class udp_server : MonoBehaviour
     //1. Convert the vectors from the Unity coordinate to the ROS coordinate
     //2. convert the "corrected vectors" to string, prepare for the UDP package.
     //giving x, y, z, roll, pitch, yaw
-    string Vec2Str(Vector3 pos, Vector3 rot)
+    string Vec2Str(Vector3 pos, Quaternion rot)
     {
         string output = (-pos.z).ToString("0.00") + ',';
         output += pos.x.ToString("0.00") + ',';
         output += pos.y.ToString("0.00") + ',';
         
-        output += (-rot.z).ToString("0.00") + ','; 
-        output += (rot.x).ToString("0.00") + ',';
-        output += (-rot.y+180).ToString("0.00") + ',';
+        output += (-rot.z).ToString("0.0000") + ','; 
+        output += (rot.x).ToString("0.0000") + ',';
+        output += (-rot.y).ToString("0.0000") + ',';
+        output += (rot.w).ToString("0.0000") + ',';
         return output;
     }
 
@@ -157,26 +158,23 @@ public class udp_server : MonoBehaviour
             if (currTicks - lastSent > 180 * 10000)
             {
                 Vector3 camPos = targetCamera.position;
-                Quaternion rotC = targetCamera.rotation;
-                Vector3 camAngles = rotC.eulerAngles;
+                Quaternion rotH = targetCamera.rotation;
 
                 Vector3 rightCtrlPos = rightController.position;
                 Quaternion rotR = rightController.rotation;
-                Vector3 rightAngles = rotR.eulerAngles;
 
                 Vector3 leftCtrlPos = leftController.position;
                 Quaternion rotL = leftController.rotation;
-                Vector3 leftAngles = rotL.eulerAngles;
 
                 long currMills = (currTicks - dtFrom.Ticks) / 10000;
-                //  Data format: time stamp + 3 positions + 3 rotations
+                //  Data format: time stamp + 3 positions + 4 quaternion rotations
 
-                sendStr = currMills.ToString() + "," + Vec2Str(camPos, camAngles);
+                sendStr = currMills.ToString() + "," + Vec2Str(camPos, rotH);
                 sendStr += "right, ";
-                sendStr += Vec2Str(rightCtrlPos, rightAngles);
+                sendStr += Vec2Str(rightCtrlPos, rotR);
                 sendStr += "left, ";
-                sendStr += Vec2Str(leftCtrlPos, leftAngles);
-                sendStr += "r_ctrl, ";// + SteamVR_Actions._default.Scroll.GetAxis(RightInputSource).ToString() + SteamVR_Actions._default.Squeeze.GetAxis(RightInputSource).ToString();
+                sendStr += Vec2Str(leftCtrlPos, rotL);
+                sendStr += "r_ctrl, ";
                 sendStr += SteamVR_Actions._default.TrackpadAxis.GetAxis(RightInputSource)[0].ToString("0.00") + ", ";
                 sendStr += SteamVR_Actions._default.TrackpadAxis.GetAxis(RightInputSource)[1].ToString("0.00") + ", ";
                 sendStr += SteamVR_Actions._default.TriggerAxis.GetAxis(RightInputSource).ToString("0.00") + ", ";
